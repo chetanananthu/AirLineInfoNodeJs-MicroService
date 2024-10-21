@@ -1,0 +1,36 @@
+version: '3'
+services:
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "2000:2000"
+    depends_on:
+      - airlineinfo    #filename can not be capital
+      - flight
+      - passanger
+
+  airlineinfo:
+    build: ./airlineinfo
+    depends_on:
+      - mysql
+
+  flight:
+    build: ./flight
+    depends_on:
+      - mysql
+
+  passanger:
+    build: ./passanger
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: pass@word1
+      MYSQL_DATABASE: airlinedb
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:

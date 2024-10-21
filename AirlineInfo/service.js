@@ -8,7 +8,7 @@ const PORT = 2001;
 app.use(express.json());
 
 const db=mysql.createConnection({
-    host:'localhost',
+    host:'mysql',
     user:'root',
     password:'pass@word1',
     database:'airlinedb'
@@ -44,7 +44,7 @@ app.get('/airline/:id',async(req,res)=>{
     db.query(sql,[id], async (err, result)=>{
         if(err) throw err;
         try{
-            const reponse=await axios.get(`http://localhost:2002/flights/airline/${id}`);
+            const reponse=await axios.get(`http://flight:2002/flights/airline/${id}`);
             result[0].flightList=reponse.data;
             res.status(200).json(result);
         }
